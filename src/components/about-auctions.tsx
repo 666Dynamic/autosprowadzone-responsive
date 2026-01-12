@@ -17,7 +17,6 @@ export function AboutAuctions() {
     const [currentImageIndex, setCurrentImageIndex] = useState(0)
     const [imageErrors, setImageErrors] = useState<Set<number>>(new Set())
     const [imageLoaded, setImageLoaded] = useState<Set<number>>(new Set())
-    const [isMobile, setIsMobile] = useState(false)
 
     const images = [
         "/audi/max-AD55987_01bdb54e3e0af8794c16fffcbf2ca28d.jpg",
@@ -46,16 +45,9 @@ export function AboutAuctions() {
 
     useEffect(() => {
         setMounted(true)
-        // Check if mobile device
-        const checkMobile = () => {
-            setIsMobile(window.innerWidth < 768 || /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent))
-        }
-        checkMobile()
-        window.addEventListener('resize', checkMobile)
-        return () => window.removeEventListener('resize', checkMobile)
     }, [])
 
-    // Image slider logic - skip error images, slower on mobile
+    // Image slider logic - skip error images
     useEffect(() => {
         if (!mounted) return
         const slideInterval = setInterval(() => {
@@ -69,9 +61,9 @@ export function AboutAuctions() {
                 }
                 return nextIndex
             })
-        }, isMobile ? 5000 : 3000) // Longer interval on mobile
+        }, 5000)
         return () => clearInterval(slideInterval)
-    }, [mounted, images.length, imageErrors, isMobile])
+    }, [mounted, images.length, imageErrors])
 
     // Simulate bidding cycle
     useEffect(() => {
@@ -319,9 +311,8 @@ export function AboutAuctions() {
                                                         style={{ objectFit: 'cover' }}
                                                         onError={() => handleImageError(currentImageIndex)}
                                                         onLoad={() => handleImageLoad(currentImageIndex)}
-                                                        loading={isMobile ? "lazy" : "eager"}
-                                                        priority={!isMobile}
-                                                        quality={isMobile ? 75 : 90}
+                                                        loading="lazy"
+                                                        quality={75}
                                                     />
                                                     {/* Loading placeholder */}
                                                     {!imageLoaded.has(currentImageIndex) && !imageErrors.has(currentImageIndex) && (

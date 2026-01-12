@@ -1,6 +1,6 @@
 @tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
 
 :root {
   --background: #ffffff;
@@ -128,13 +128,7 @@
   .dark textarea,
   .dark select,
   .dark .form-input {
-    background-color: #0f172a;
-    border-color: #334155;
-    color: #f1f5f9;
-  }
-
-  .dark input::placeholder {
-    color: #64748b;
+    @apply bg-slate-900 border-slate-700 text-slate-100 placeholder:text-slate-500;
   }
 
   input::placeholder {
@@ -148,7 +142,7 @@
 
   .dark input:focus,
   .dark textarea:focus {
-    background-color: #1e293b;
+    @apply bg-slate-800;
   }
 
   /* Process Grid Fix */

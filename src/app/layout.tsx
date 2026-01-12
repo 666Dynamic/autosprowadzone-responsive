@@ -23,7 +23,7 @@ export const metadata: Metadata = {
     siteName: "autosprowadzone.pl",
     images: [
       {
-        url: "/audi-real.jpg",
+        url: "/hero-bg.png",
         width: 1200,
         height: 630,
         alt: "Autosprowadzone.pl - Import aut z Niemiec",
