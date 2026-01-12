@@ -8,6 +8,7 @@ import { useState, useEffect } from "react"
 export function Hero() {
     function VideoBackground() {
         const [isMobile, setIsMobile] = useState(false)
+        const [isLoading, setIsLoading] = useState(true)
 
         useEffect(() => {
             const checkMobile = () => {
@@ -16,21 +17,41 @@ export function Hero() {
 
             checkMobile()
             window.addEventListener('resize', checkMobile)
-            return () => window.removeEventListener('resize', checkMobile)
-        }, [])
+
+            // Hide loading after 2 seconds on desktop, or immediately on mobile
+            const timer = setTimeout(() => {
+                setIsLoading(false)
+            }, isMobile ? 500 : 2000)
+
+            return () => {
+                window.removeEventListener('resize', checkMobile)
+                clearTimeout(timer)
+            }
+        }, [isMobile])
 
         return (
-            <video
-                autoPlay
-                loop
-                muted
-                playsInline
-                preload={isMobile ? "none" : "metadata"}
-                className="absolute inset-0 w-full h-full object-cover opacity-30 dark:opacity-20"
-            >
-                <source src="/13164895_3840_2160_30fps.mp4" type="video/mp4" />
-                Your browser does not support the video tag.
-            </video>
+            <>
+                {isLoading && !isMobile && (
+                    <div className="absolute inset-0 flex items-center justify-center bg-background/50 backdrop-blur-sm z-10">
+                        <div className="flex items-center space-x-2 text-primary">
+                            <div className="w-4 h-4 border-2 border-primary border-t-transparent rounded-full animate-spin"></div>
+                            <span className="text-sm font-medium">Ładowanie wideo...</span>
+                        </div>
+                    </div>
+                )}
+                <video
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    preload={isMobile ? "none" : "metadata"}
+                    onLoadedData={() => setIsLoading(false)}
+                    className="absolute inset-0 w-full h-full object-cover opacity-30 dark:opacity-20"
+                >
+                    <source src="/13164895_3840_2160_30fps.mp4" type="video/mp4" />
+                    Your browser does not support the video tag.
+                </video>
+            </>
         )
     }
 
