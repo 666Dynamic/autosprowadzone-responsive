@@ -1,0 +1,317 @@
+import { ContactForm } from "@/components/contact-form"
+import { ShieldCheck, MapPin, Euro, Search, Truck, CheckCircle2, Sparkles, ChevronRight, Activity, MonitorCheck, Globe, Clock } from "lucide-react"
+import { Card, CardContent } from "@/components/ui/card"
+import type { Metadata } from "next"
+import Image from "next/image"
+
+export const metadata: Metadata = {
+    title: "Weryfikacja Aut w Niemczech | autosprowadzone.pl",
+    description: "Sprawdzenie auta przed zakupem w Niemczech. Inspekcja techniczna, pomiar lakieru, diagnostyka komputerowa. Obszar Bremen i całe Niemcy.",
+}
+
+export default function VerificationPage() {
+    return (
+        <div className="bg-background">
+            <div className="container mx-auto px-4 md:px-8 py-12 md:py-24">
+                <div className="max-w-6xl mx-auto space-y-24">
+
+                    {/* Header Section */}
+                    <div className="text-center space-y-6">
+                        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-black uppercase tracking-widest">
+                            <Sparkles className="w-4 h-4" /> Profesjonalny Audyt Pojazdu
+                        </div>
+                        <h1 className="text-4xl md:text-8xl font-black leading-none uppercase tracking-tighter text-foreground">
+                            Weryfikacja <br /><span className="text-primary italic">Zanim Kupisz</span>
+                        </h1>
+                        <p className="text-xl text-muted-foreground font-medium max-w-3xl mx-auto leading-relaxed">
+                            Nie ryzykuj oszczędności życia. Wyślij naszego eksperta na miejsce, aby sprawdził auto od osoby prywatnej lub dealera w całych Niemczech.
+                        </p>
+                    </div>
+
+                    {/* GOLD AMBER: Sam znalazłeś auto? */}
+                    <div className="relative group">
+                        <div className="absolute inset-0 bg-primary/20 blur-[120px] rounded-full scale-75 group-hover:scale-100 transition-transform duration-700 pointer-events-none" />
+
+                        <div className="relative bg-primary/10 p-1 md:p-2 rounded-[3.5rem] shadow-2xl overflow-hidden border border-primary/20 backdrop-blur-sm">
+                            {/* Decorative Motive / Pattern */}
+                            <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/20 rounded-full translate-x-32 -translate-y-32 blur-[100px] pointer-events-none" />
+                            <div className="absolute bottom-0 left-0 w-96 h-96 bg-white/10 rounded-full -translate-x-48 translate-y-48 blur-3xl pointer-events-none" />
+
+                            <div className="bg-gradient-to-br from-amber-400 via-amber-500 to-amber-600 rounded-[3.1rem] flex flex-col lg:flex-row items-stretch relative overflow-hidden">
+                                {/* Subtle Pattern Overlay */}
+                                <div className="absolute inset-0 opacity-[0.05] pointer-events-none bg-grid-white" />
+
+                                {/* Content Area */}
+                                <div className="lg:w-3/5 p-8 md:p-16 space-y-8 relative z-10 flex flex-col justify-center">
+                                    <div className="inline-block px-4 py-1.5 rounded-full bg-black/10 border border-black/10 text-black text-xs font-black uppercase tracking-widest">
+                                        Import Indywidualny
+                                    </div>
+                                    <h2 className="text-4xl md:text-7xl font-black text-black uppercase tracking-tighter leading-[0.9]">
+                                        Sam znalazłeś auto? <br />
+                                        <span className="text-white italic drop-shadow-md">Sprawdzimy je dla Ciebie.</span>
+                                    </h2>
+                                    <p className="text-xl md:text-2xl text-black/90 font-bold leading-relaxed max-w-2xl">
+                                        Znalazłeś interesującą ofertę w Niemczech? Nie ryzykuj wyjazdu w ciemno.
+                                        Nasi eksperci przeprowadzą dla Ciebie pełną weryfikację sprzedawcy oraz audyt techniczny na miejscu.
+                                    </p>
+                                    <div className="flex flex-wrap gap-4 pt-4">
+                                        {["Analiza ogłoszenia", "Weryfikacja sprzedawcy", "Inspekcja techniczna", "Negocjacje ceny"].map((tag, i) => (
+                                            <div key={i} className="px-4 py-2 bg-black/10 rounded-xl border border-black/5 text-black font-black uppercase text-[10px] tracking-widest">
+                                                {tag}
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+
+                                {/* Image & CTA Area */}
+                                <div className="lg:w-2/5 p-8 md:p-10 relative flex flex-col justify-end min-h-[500px]">
+                                    {/* Expert Image Background with mask */}
+                                    <div className="absolute inset-0 z-0">
+                                        <Image
+                                            src="/expert-inspection.png"
+                                            alt="Ekspert autosprowadzone.pl podczas inspekcji"
+                                            fill
+                                            className="object-cover object-center opacity-90 mix-blend-multiply"
+                                            sizes="(max-width: 768px) 100vw, 40vw"
+                                        />
+                                        <div className="absolute inset-0 bg-gradient-to-t from-amber-600/80 via-transparent to-transparent" />
+                                    </div>
+
+                                    <div className="relative z-10 bg-black/90 p-8 md:p-10 rounded-[2.5rem] shadow-2xl border border-white/10 space-y-6">
+                                        <div className="space-y-2">
+                                            <div className="text-[10px] font-black uppercase tracking-widest bg-primary/20 text-primary px-4 py-2 rounded-full w-fit border border-primary/20">Weryfikacja pod Bremen</div>
+                                            <div className="flex items-baseline gap-2">
+                                                <span className="text-4xl md:text-7xl font-black tracking-tighter uppercase leading-none text-white">250 €</span>
+                                            </div>
+                                            <p className="font-bold text-sm text-slate-400 leading-relaxed">
+                                                Pełna inspekcja techniczna, pomiar lakieru, diagnostyka komputerowa i kompleksowy raport rzeczoznawcy.
+                                            </p>
+                                        </div>
+                                        <div className="space-y-4">
+                                            <a href="#form" className="flex items-center justify-center gap-3 bg-primary text-black hover:bg-white transition-all h-20 rounded-2xl font-black uppercase tracking-widest text-lg shadow-xl shadow-primary/20 group/btn">
+                                                Zleć Inspekcję
+                                                <ChevronRight className="w-6 h-6 group-hover/btn:translate-x-1 transition-transform" />
+                                            </a>
+                                            <p className="text-[10px] text-center text-slate-500 font-black uppercase tracking-widest leading-relaxed">
+                                                Dojazd w dowolne miejsce w Niemczech
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* New Section: Dealer vs Private */}
+                    <section className="py-24 border-y border-border">
+                        <div className="grid lg:grid-cols-2 gap-12">
+                            <div className="space-y-8 bg-card p-10 rounded-[3rem] border border-border shadow-lg">
+                                <div className="p-3 bg-primary rounded-2xl w-fit text-primary-foreground">
+                                    <Search className="w-8 h-8" />
+                                </div>
+                                <h3 className="text-3xl font-black uppercase tracking-tighter text-foreground leading-none line-clamp-2">
+                                    Dealerzy i Salony <br /><span className="text-primary italic">Mobile.de / AutoScout24</span>
+                                </h3>
+                                <p className="text-muted-foreground font-medium leading-relaxed">
+                                    Większość profesjonalnych ogłoszeń pochodzi od Autohausów. Nasza weryfikacja obejmuje:
+                                </p>
+                                <ul className="space-y-4">
+                                    {[
+                                        "Sprawdzenie historii i opinii o danym salonie",
+                                        "Weryfikacja czy auto nie jest ofertą typu 'tylko na eksport'",
+                                        "Sprawdzenie kompletności dokumentacji serwisowej",
+                                        "Analiza czy podana cena zawiera podatek VAT (Brutto/Netto)"
+                                    ].map((item, i) => (
+                                        <li key={i} className="flex gap-3 text-sm font-bold text-foreground/80 lowercase first-letter:uppercase">
+                                            <div className="text-primary mt-1 flex-shrink-0">•</div>
+                                            {item}
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+
+                            <div className="space-y-8 bg-slate-950 p-10 rounded-[3rem] border border-primary/20 shadow-2xl relative overflow-hidden">
+                                <div className="absolute top-0 right-0 p-10 opacity-5">
+                                    <ShieldCheck className="w-32 h-32 text-primary" />
+                                </div>
+                                <div className="p-3 bg-primary/20 rounded-2xl w-fit text-primary outline outline-1 outline-primary/30">
+                                    <ShieldCheck className="w-8 h-8" />
+                                </div>
+                                <h3 className="text-3xl font-black uppercase tracking-tighter text-white leading-none">
+                                    Osoby Prywatne <br /><span className="text-primary italic">eBay Kleinanzeigen</span>
+                                </h3>
+                                <p className="text-slate-400 font-medium leading-relaxed">
+                                    Tu czyha najwięcej pułapek. Kupując od osoby prywatnej, kładziemy szczególny nacisk na:
+                                </p>
+                                <ul className="space-y-4 relative z-10">
+                                    {[
+                                        "Potwierdzenie autentyczności ogłoszenia i tożsamości sprzedawcy",
+                                        "Wykrywanie prób wyłudzenia zaliczki (popularne oszustwa)",
+                                        "Weryfikacja faktycznego stanu prawnego pojazdu",
+                                        "Osobista rozmowa ze sprzedawcą przed planowanym wyjazdem"
+                                    ].map((item, i) => (
+                                        <li key={i} className="flex gap-3 text-sm font-bold text-slate-300 lowercase first-letter:uppercase">
+                                            <div className="text-primary mt-1 flex-shrink-0">•</div>
+                                            {item}
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* Risks & Scope Grid */}
+                    <section className="py-24 border-b border-border">
+                        <div className="grid lg:grid-cols-2 gap-16 items-start">
+                            {/* Left: Risks */}
+                            <div className="space-y-8">
+                                <h2 className="text-3xl md:text-5xl font-black uppercase tracking-tighter text-foreground leading-none">
+                                    Ryzyka zakupu <br /><span className="text-primary italic">na własną rękę</span>
+                                </h2>
+                                <p className="text-muted-foreground font-medium leading-relaxed">
+                                    Rynek niemiecki, choć uchodzi za wzorowy, pełen jest pułapek zastawianych na kupujących z zagranicy.
+                                    Oszustwa na eBay Kleinanzeigen stały się plagą.
+                                </p>
+                                <div className="space-y-4">
+                                    {[
+                                        { t: "Oszustwa na zaliczkę", d: "Fikcyjne ogłoszenia w super cenach. Sprzedawca prosi o zaliczkę na transport i znika." },
+                                        { t: "Ukryta historia wypadkowa", d: "Auta ze szkodą całkowitą naprawiane tanim kosztem i sprzedawane jako bezwypadkowe." },
+                                        { t: "Cofnięte liczniki", d: "Proceder ten nadal dotyczy ok. 30% aut eksportowych z Niemiec." },
+                                        { t: "Wady ukryte silnika", d: "Sprzedawcy prywatni często pozbywają się aut tuż przed drogimi naprawami (DPF, turbo, rozrząd)." }
+                                    ].map((risk, i) => (
+                                        <div key={i} className="flex gap-4 p-4 rounded-2xl bg-red-500/5 border border-red-500/10">
+                                            <div className="mt-1 text-red-500 font-black">!</div>
+                                            <div>
+                                                <h4 className="font-black uppercase text-xs text-red-600 dark:text-red-300">{risk.t}</h4>
+                                                <p className="text-xs text-muted-foreground font-bold leading-relaxed">{risk.d}</p>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                            {/* Right: Scope */}
+                            <div className="bg-card border-2 border-primary/30 p-10 rounded-[2.5rem] shadow-xl relative overflow-hidden">
+                                <div className="absolute top-0 right-0 p-4 opacity-5"><Search className="w-32 h-32 text-primary" /></div>
+                                <h3 className="text-2xl font-black mb-8 flex items-center uppercase tracking-tight text-foreground">
+                                    <Search className="mr-3 h-8 w-8 text-primary" /> Zakres Inspekcji
+                                </h3>
+                                <ul className="space-y-6 relative z-10">
+                                    {[
+                                        { title: "Lakier i Nadwozie", desc: "Pomiar grubości powłoki na każdym elemencie, wykrywanie napraw blacharskich i szpachli. Sprawdzenie oryginalności szwów i zgrzewów." },
+                                        { title: "Diagnostyka & Silnik", desc: "Pełny odczyt błędów (DTC). Analiza parametrów pracy turbiny, wtrysków i filtra DPF w czasie jazdy próbnej." },
+                                        { title: "Układ Jezdny i Hamulcowy", desc: "Weryfikacja stanu zawieszenia i układu kierowniczego. Sprawdzenie zużycia tarcz, klocków oraz stanu opon." },
+                                        { title: "Weryfikacja Historii & VIN", desc: "Sprawdzenie wpisów w międzynarodowych bazach ASO i autentyczności przebiegu (TÜV/Dekra)." },
+                                        { title: "AVILOO (EV/Hybrid)", desc: "Certyfikowany test stanu zdrowia baterii (SoH). Kluczowy przy autach elektrycznych." }
+                                    ].map((item, idx) => (
+                                        <li key={idx} className="flex items-start gap-4 group/item">
+                                            <div className="bg-primary text-primary-foreground font-black p-1 rounded-lg h-8 w-8 flex items-center justify-center shrink-0 text-xs shadow-md group-hover/item:scale-110 transition-transform font-sans">0{idx + 1}</div>
+                                            <div>
+                                                <h4 className="font-black text-foreground uppercase tracking-tight mb-1 group-hover/item:text-primary transition-colors text-base">{item.title}</h4>
+                                                <p className="text-sm text-muted-foreground leading-relaxed font-bold">{item.desc}</p>
+                                            </div>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* Pricing Grid */}
+                    <div className="grid lg:grid-cols-2 gap-8 items-stretch pt-12">
+                        {/* Package 1 */}
+                        <div className="bg-slate-900 text-white p-10 rounded-[3rem] shadow-2xl relative overflow-hidden flex flex-col justify-between border-2 border-primary min-h-[600px]">
+                            <div className="absolute top-0 right-0 bg-primary px-8 py-3 font-black text-xs uppercase tracking-widest rounded-bl-3xl">Najczęściej wybierany</div>
+                            <div className="space-y-8">
+                                <h3 className="text-2xl font-black uppercase tracking-tight flex items-center text-white">
+                                    <MapPin className="mr-3 h-8 w-8 text-primary" /> Region Bremen (Baza)
+                                </h3>
+                                <p className="text-slate-400 text-sm font-bold uppercase tracking-widest leading-tight">Obszar do 100km od Osterholz-Scharmbeck</p>
+
+                                <div className="space-y-6">
+                                    {[
+                                        "Pełny audyt mechaniczny i wizualny",
+                                        "Pomiar powłoki lakierniczej",
+                                        "Diagnostyka komputerowa modułów",
+                                        "Raport PDF + min. 50 zdjęć HD",
+                                        "Report wideo z pracy silnika i jazdy",
+                                        "Negocjacje ceny w cenie"
+                                    ].map((item, i) => (
+                                        <div key={i} className="flex items-center gap-3">
+                                            <CheckCircle2 className="w-5 h-5 text-primary" />
+                                            <span className="text-sm font-bold uppercase tracking-tight text-slate-200">{item}</span>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                            <div className="pt-8 border-t border-white/10 flex flex-col gap-4">
+                                <div className="flex justify-between items-end">
+                                    <div>
+                                        <div className="text-[10px] text-slate-400 font-black uppercase tracking-widest">Koszt ryczałtowy</div>
+                                        <div className="text-5xl font-black text-white tracking-tighter">250 €</div>
+                                    </div>
+                                    <a href="#form" className="bg-primary hover:bg-white hover:text-black transition-all px-8 py-4 rounded-xl font-black uppercase tracking-widest text-xs">Zamów teraz</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Package 2 */}
+                        <div className="bg-card p-10 rounded-[3rem] shadow-xl flex flex-col justify-between border border-border min-h-[600px]">
+                            <div className="space-y-8">
+                                <h3 className="text-2xl font-black uppercase tracking-tight flex items-center text-foreground">
+                                    <Globe className="mr-3 h-8 w-8 text-primary" /> Pozostałe Regiony DE
+                                </h3>
+                                <p className="text-muted-foreground text-sm font-bold uppercase tracking-widest leading-tight">Berlin, Hamburg, Monachium i okolice</p>
+
+                                <p className="text-foreground/80 font-bold leading-relaxed text-sm">
+                                    Dla aut poza naszym głównym regionem przygotowujemy indywidualną kalkulację kosztów dojazdu.
+                                    Współpracujemy z rzeczoznawcami w całych Niemczech, co gwarantuje szybki czas reakcji.
+                                </p>
+
+                                <div className="bg-primary/5 p-6 rounded-2xl border border-primary/10">
+                                    <p className="text-xs font-black uppercase text-primary tracking-widest">Procedura wyceny:</p>
+                                    <ul className="mt-4 space-y-3">
+                                        <li className="text-[11px] font-bold text-muted-foreground uppercase flex gap-2"><div className="text-primary">•</div> Weryfikacja dostępności rzeczoznawcy</li>
+                                        <li className="text-[11px] font-bold text-muted-foreground uppercase flex gap-2"><div className="text-primary">•</div> Kalkulacja kosztów dojazdu i paliwa</li>
+                                        <li className="text-[11px] font-bold text-muted-foreground uppercase flex gap-2"><div className="text-primary">•</div> Realizacja zazwyczaj w 24-48h</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div className="pt-8 border-t border-border flex justify-between items-end">
+                                <div>
+                                    <div className="text-[10px] text-muted-foreground font-black uppercase tracking-widest">Wycena indywidualna</div>
+                                    <div className="text-3xl font-black text-foreground tracking-tighter uppercase whitespace-nowrap">Kontakt</div>
+                                </div>
+                                <a href="#form" className="border-2 border-primary text-primary hover:bg-primary hover:text-white transition-all px-8 py-4 rounded-xl font-black uppercase tracking-widest text-xs">Zapytaj o cenę</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Form Section */}
+                    <div id="form" className="pt-12 scroll-mt-20 max-w-4xl mx-auto">
+                        <ContactForm mode="weryfikacja" />
+                    </div>
+
+                    {/* Bottom Features */}
+                    <div className="grid md:grid-cols-3 gap-8 pb-12">
+                        <div className="bg-secondary/30 p-8 rounded-[2rem] border-2 border-transparent text-center group hover:border-primary transition-all shadow-sm">
+                            <Clock className="w-12 h-12 text-primary mx-auto mb-4 group-hover:rotate-12 transition-transform" />
+                            <h3 className="font-black uppercase text-sm mb-2 text-foreground">Szybkość</h3>
+                            <p className="text-xs text-muted-foreground font-bold leading-relaxed">Wstępna analiza ogłoszenia w 2h. Inspekcja na miejscu zazwyczaj do 24h.</p>
+                        </div>
+                        <div className="bg-secondary/30 p-8 rounded-[2rem] border-2 border-transparent text-center group hover:border-primary transition-all shadow-sm">
+                            <Euro className="w-12 h-12 text-primary mx-auto mb-4 group-hover:rotate-12 transition-transform" />
+                            <h3 className="font-black uppercase text-sm mb-2 text-foreground">Oszczędność</h3>
+                            <p className="text-xs text-muted-foreground font-bold leading-relaxed">Koszt audytu najczęściej zwraca się kilkukrotnie dzięki skutecznym negocjacjom.</p>
+                        </div>
+                        <div className="bg-secondary/30 p-8 rounded-[2rem] border-2 border-transparent text-center group hover:border-primary transition-all shadow-sm">
+                            <ShieldCheck className="w-12 h-12 text-primary mx-auto mb-4 group-hover:rotate-12 transition-transform" />
+                            <h3 className="font-black uppercase text-sm mb-2 text-foreground">Bezpieczeństwo</h3>
+                            <p className="text-xs text-muted-foreground font-bold leading-relaxed">Odrzucamy 7 na 10 sprawdzanych aut. Kupujemy tylko te godne polecenia.</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    )
+}

@@ -1,0 +1,153 @@
+import { Calculator } from "@/components/calculator"
+import { Metadata } from "next"
+
+export const metadata: Metadata = {
+    title: "Kalkulator Akcyzy 2026 | autosprowadzone.pl",
+    description: "Oblicz całkowity koszt sprowadzenia auta z Niemiec. Sprawdź aktualne stawki akcyzy (3.1% / 18.6%), koszty rejestracji i prowizję.",
+}
+
+import { ContactForm } from "@/components/contact-form"
+import { ArrowRight, AlertTriangle } from "lucide-react"
+
+export default function CalculatorPage() {
+    return (
+        <div className="container mx-auto px-4 md:px-8 py-12 md:py-20">
+            <div className="max-w-4xl mx-auto mb-12 text-center">
+                <h1 className="text-3xl md:text-5xl font-bold mb-6">Kalkulator Kosztów Importu</h1>
+                <p className="text-lg text-muted-foreground">
+                    Skorzystaj z naszego precyzyjnego narzędzia, aby oszacować całkowity koszt sprowadzenia samochodu "pod dom".
+                    Uwzględniamy wszystkie opłaty urzędowe obowiązujące w 2026 roku.
+                </p>
+            </div>
+
+            <Calculator />
+
+            <div className="mt-32 max-w-6xl mx-auto relative px-4">
+                {/* Decorative background elements */}
+                <div className="absolute top-0 -left-20 w-64 h-64 bg-primary/10 rounded-full blur-3xl -z-10" />
+                <div className="absolute bottom-0 -right-20 w-80 h-80 bg-blue-500/5 rounded-full blur-3xl -z-10" />
+
+                <div className="grid md:grid-cols-2 gap-16 items-start text-foreground">
+                    <div className="space-y-12">
+                        <h2 className="text-4xl md:text-5xl font-black tracking-tighter uppercase italic leading-none">
+                            Koszt sprowadzenia <br />
+                            <span className="text-primary not-italic">Niemcy / UE</span>
+                        </h2>
+
+                        <p className="text-lg leading-relaxed text-muted-foreground max-w-xl">
+                            Całkowity koszt importu to nie tylko cena na fakturze. W 2026 roku musisz uwzględnić szereg opłat urzędowych oraz logistycznych.
+                        </p>
+
+                        <div className="space-y-10">
+                            <div className="group transition-all">
+                                <h3 className="text-xl font-black mb-6 flex items-center gap-4 text-foreground uppercase tracking-tight">
+                                    <span className="w-10 h-10 rounded-xl bg-primary/10 dark:bg-primary/20 flex items-center justify-center text-primary text-sm font-black italic border border-primary/20">01</span>
+                                    Podatek Akcyzowy (AKC-U/S)
+                                </h3>
+                                <p className="text-sm text-muted-foreground leading-relaxed mb-6 font-medium">
+                                    To największy koszt dodatkowy. Stawka zależy od pojemności silnika i rodzaju napędu:
+                                </p>
+                                <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4 list-none p-0 m-0">
+                                    {[
+                                        { rate: "3.1%", desc: "do 2000 cm³" },
+                                        { rate: "18.6%", desc: "powyżej 2000 cm³" },
+                                        { rate: "1.55% / 9.3%", desc: "hybrydy (HEV/PHEV)" },
+                                        { rate: "0%", desc: "auta elektryczne" },
+                                    ].map((item, idx) => (
+                                        <li key={idx} className="bg-card border-2 border-border p-5 rounded-3xl flex flex-col group-hover:border-primary/40 transition-all shadow-sm">
+                                            <span className="text-primary font-black text-2xl">{item.rate}</span>
+                                            <span className="text-[10px] text-muted-foreground uppercase font-black tracking-widest mt-1">{item.desc}</span>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+
+                            <div className="group transition-all">
+                                <h3 className="text-xl font-black mb-6 flex items-center gap-4 text-foreground uppercase tracking-tight">
+                                    <span className="w-10 h-10 rounded-xl bg-muted flex items-center justify-center text-muted-foreground text-sm font-black italic border border-border">02</span>
+                                    Transport i Logistyka
+                                </h3>
+                                <div className="bg-muted border border-border p-8 rounded-[2.5rem] group-hover:border-primary/20 transition-all">
+                                    <p className="text-base text-muted-foreground leading-relaxed m-0 italic font-medium">
+                                        Koszt transportu lawetą zależy od odległości. Średnio z zachodnich Niemiec to ok. <span className="text-foreground font-bold not-italic underline decoration-primary/30 underline-offset-4">2000-3000 zł</span>. Przy powrocie "na kołach" dolicz tablice zjazdowe (ok. 150-250 EUR).
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="bg-card p-10 md:p-12 rounded-[3.5rem] border-2 border-border shadow-2xl relative overflow-hidden group">
+                        <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full blur-3xl -mr-16 -mt-16" />
+
+                        <h2 className="text-2xl font-black mb-12 text-foreground uppercase tracking-tight flex items-center gap-4">
+                            Procedura i Dokumenty
+                            <ArrowRight className="w-6 h-6 text-primary animate-pulse" />
+                        </h2>
+
+                        <div className="space-y-12 relative">
+                            <div className="absolute left-[3px] top-2 bottom-2 w-0.5 bg-border -z-0" />
+
+                            {[
+                                {
+                                    step: "Krok 1: Zakup",
+                                    desc: "Otrzymujesz: Umowę (Kaufvertrag) lub Fakturę oraz oba dowody rejestracyjne (Teil I i Teil II).",
+                                    active: true
+                                },
+                                {
+                                    step: "Krok 2: Akcyza i Tłumaczenia",
+                                    desc: "Masz 14 dni na deklarację AKC-U/S i 30 dni na opłatę. Wymagane są również tłumaczenia przysięgłe dokumentów.",
+                                    active: false
+                                },
+                                {
+                                    step: "Krok 3: Rejestracja",
+                                    desc: "Pierwsze badanie techniczne w kraju (ok. 100 zł) oraz rejestracja w Twoim Wydziale Komunikacji (161.50 zł).",
+                                    active: false
+                                }
+                            ].map((item, idx) => (
+                                <div key={idx} className="relative pl-10 group/item">
+                                    <div className={`absolute left-0 top-1.5 w-2 h-2 rounded-full border-2 transition-all ${item.active ? "bg-primary border-primary scale-150 shadow-[0_0_10px_rgba(245,158,11,0.5)]" : "bg-card border-muted-foreground/30 group-hover/item:border-primary"}`} />
+                                    <h4 className={`font-black text-xs uppercase tracking-[0.2em] mb-3 transition-colors ${item.active ? "text-primary" : "text-muted-foreground group-hover/item:text-primary"}`}>
+                                        {item.step}
+                                    </h4>
+                                    <p className="text-sm text-foreground/80 leading-relaxed font-bold">
+                                        {item.desc}
+                                    </p>
+                                </div>
+                            ))}
+                        </div>
+
+                        <div className="mt-12 pt-8 border-t border-border flex items-start gap-4 -mx-10 md:-mx-12 p-8 mb--12 bg-muted/30">
+                            <div className="w-10 h-10 rounded-xl bg-orange-500/10 flex items-center justify-center shrink-0 border border-orange-500/20">
+                                <AlertTriangle className="w-5 h-5 text-orange-500" />
+                            </div>
+                            <p className="text-xs font-bold text-muted-foreground italic leading-relaxed m-0 uppercase tracking-widest">
+                                Uwaga: Import z poza UE (np. Szwajcaria, USA) to dodatkowe <span className="text-foreground font-black">Cło (10%)</span> oraz <span className="text-foreground font-black">Podatek VAT (23%)</span>.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="bg-primary text-primary-foreground p-10 md:p-16 rounded-[4rem] border-2 border-primary/20 mt-32 relative overflow-hidden group shadow-2xl shadow-primary/20">
+                    <div className="absolute top-0 right-0 p-8 transform group-hover:scale-110 transition-transform duration-500">
+                        <ArrowRight className="w-48 h-48 text-white opacity-10 -rotate-45" />
+                    </div>
+
+                    <div className="max-w-2xl relative z-10">
+                        <h3 className="text-primary-foreground text-3xl md:text-4xl font-black mb-6 uppercase tracking-tighter italic">Kompleksowa Obsługa</h3>
+                        <p className="text-primary-foreground/90 text-lg md:text-xl leading-relaxed mb-0 font-bold italic">
+                            Przejmujemy na siebie cały proces: od weryfikacji auta i negocjacji, po przygotowanie kompletu dokumentów do rejestracji. Ty tylko odbierasz kluczyki pod domem.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div className="mt-32 max-w-4xl mx-auto px-4 pb-20">
+                <div className="text-center mb-16">
+                    <h2 className="text-4xl font-black mb-6 uppercase tracking-tight italic text-foreground">Masz pytania co do wyceny?</h2>
+                    <p className="text-muted-foreground font-bold uppercase tracking-[0.2em]">Skontaktuj się bezpośrednio z naszym ekspertem.</p>
+                </div>
+                <ContactForm mode="simple" title="Zapytaj o wycenę" description="Nasz ekspert pomoże Ci skalkulować opłacalność sprowadzenia danego egzemplarza." />
+            </div>
+        </div>
+    )
+}

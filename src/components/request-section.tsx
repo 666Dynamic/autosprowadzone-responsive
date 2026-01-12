@@ -1,0 +1,65 @@
+"use client"
+
+import { ContactForm } from "@/components/contact-form"
+import { Search, Send, Sparkles, Filter, CheckCircle2 } from "lucide-react"
+
+export function RequestSection() {
+    return (
+        <section id="request-section" className="py-24 md:py-32 bg-slate-50 dark:bg-[#0b1222] relative overflow-hidden">
+            {/* Decorative background elements */}
+            <div className="absolute top-0 right-0 w-1/3 h-1/2 bg-primary/5 blur-[120px] rounded-full pointer-events-none" />
+            <div className="absolute bottom-0 left-0 w-1/4 h-1/3 bg-primary/10 blur-[100px] rounded-full pointer-events-none" />
+            <div className="absolute top-1/4 left-1/4 w-px h-1/2 bg-gradient-to-b from-transparent via-primary/20 to-transparent pointer-events-none" />
+
+            <div className="container px-4 md:px-8 relative z-10 mx-auto">
+                <div className="flex flex-col lg:flex-row gap-16 lg:gap-24 items-center">
+
+                    {/* Left Side: Text & Process */}
+                    <div className="lg:w-5/12 space-y-10">
+                        <div className="space-y-6">
+                            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 text-primary text-[10px] font-black uppercase tracking-widest">
+                                <Sparkles className="w-3.5 h-3.5" /> Twoje Auto Czeka
+                            </div>
+                            <h2 className="text-4xl md:text-7xl font-black leading-[1.1] uppercase tracking-tighter text-slate-900 dark:text-white">
+                                Czego dokładnie <br /><span className="text-primary italic">szukasz?</span>
+                            </h2>
+                            <p className="text-xl text-slate-600 dark:text-slate-400 font-medium leading-relaxed max-w-xl">
+                                Twoje zlecenie trafia bezpośrednio do eksperta na rynku DE. Przeszukujemy systemy pod kątem aut ze sprawdzoną historią i wysyłamy Ci propozycje godne zakupu.
+                            </p>
+                        </div>
+
+                        <div className="space-y-8 relative">
+                            {/* Vertical line connecting steps */}
+                            <div className="absolute left-6 top-4 bottom-4 w-0.5 bg-gradient-to-b from-primary via-primary/50 to-transparent hidden sm:block" />
+
+                            {[
+                                { title: "Określasz budżet i wymagania", subtitle: "Budżet, marka i model" },
+                                { title: "My weryfikujemy rynek", subtitle: "Sprawdzamy historię i dostępność" },
+                                { title: "Otrzymujesz propozycje", subtitle: "Tylko egzemplarze godne zakupu" }
+                            ].map((step, idx) => (
+                                <div key={idx} className="flex items-center gap-6 group relative">
+                                    <div className="h-12 w-12 rounded-2xl bg-primary text-slate-950 flex items-center justify-center font-black text-xl shadow-[0_10px_20px_-5px_rgba(245,158,11,0.5)] border-2 border-primary/20 shrink-0 z-10 transition-transform group-hover:scale-110">
+                                        {idx + 1}
+                                    </div>
+                                    <div className="space-y-1">
+                                        <h4 className="font-black text-slate-900 dark:text-white uppercase tracking-tight text-lg group-hover:text-primary transition-colors">{step.title}</h4>
+                                        <div className="flex items-center gap-2 text-[10px] font-black text-slate-500 dark:text-slate-500 uppercase tracking-widest">
+                                            {step.subtitle}
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+
+                    {/* Right Side: Unified Contact Form */}
+                    <div className="lg:w-7/12 w-full relative">
+                        {/* Shadow Glow */}
+                        <div className="absolute -inset-4 bg-primary/10 blur-3xl rounded-[4rem] pointer-events-none -z-10" />
+                        <ContactForm mode="search" className="border-primary/30 dark:bg-slate-900/60" />
+                    </div>
+                </div>
+            </div>
+        </section>
+    )
+}
