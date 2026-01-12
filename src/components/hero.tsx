@@ -3,16 +3,29 @@
 import { Button } from "@/components/ui/button"
 import { ArrowRight, CheckCircle2 } from "lucide-react"
 import Link from "next/link"
+import { useState, useEffect } from "react"
 
 export function Hero() {
     function VideoBackground() {
+        const [isMobile, setIsMobile] = useState(false)
+
+        useEffect(() => {
+            const checkMobile = () => {
+                setIsMobile(window.innerWidth < 768 || /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent))
+            }
+
+            checkMobile()
+            window.addEventListener('resize', checkMobile)
+            return () => window.removeEventListener('resize', checkMobile)
+        }, [])
+
         return (
             <video
                 autoPlay
                 loop
                 muted
                 playsInline
-                preload="metadata"
+                preload={isMobile ? "none" : "metadata"}
                 className="absolute inset-0 w-full h-full object-cover opacity-30 dark:opacity-20"
             >
                 <source src="/13164895_3840_2160_30fps.mp4" type="video/mp4" />
