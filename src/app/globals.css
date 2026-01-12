@@ -108,12 +108,6 @@
   }
 
   /* Global cursor and transition utilities */
-  button,
-  a,
-  [role="button"],
-  .cursor-pointer {
-    @apply cursor-pointer;
-  }
 
   button,
   a,
@@ -138,7 +132,7 @@
   }
 
   input::placeholder {
-    @apply text-muted-foreground/60;
+    @apply text-muted-foreground opacity-60;
   }
 
   input:focus,
