@@ -15,6 +15,8 @@ export function AboutAuctions() {
     const [mounted, setMounted] = useState(false)
     const [isFinished, setIsFinished] = useState(false)
     const [currentImageIndex, setCurrentImageIndex] = useState(0)
+    const [imageErrors, setImageErrors] = useState<Set<number>>(new Set())
+    const [imageLoaded, setImageLoaded] = useState<Set<number>>(new Set())
 
     const images = [
         "/audi/max-AD55987_01bdb54e3e0af8794c16fffcbf2ca28d.jpg",
@@ -27,18 +29,41 @@ export function AboutAuctions() {
         "/audi/max-AD55987_ee56ff1e3170932847ff99740f2fd3f6.jpg"
     ]
 
+    const handleImageError = (index: number) => {
+        setImageErrors(prev => new Set(prev).add(index))
+        // Try to move to next image if current one fails
+        if (index === currentImageIndex) {
+            setTimeout(() => {
+                setCurrentImageIndex(prev => (prev + 1) % images.length)
+            }, 1000)
+        }
+    }
+
+    const handleImageLoad = (index: number) => {
+        setImageLoaded(prev => new Set(prev).add(index))
+    }
+
     useEffect(() => {
         setMounted(true)
     }, [])
 
-    // Image slider logic
+    // Image slider logic - skip error images
     useEffect(() => {
         if (!mounted) return
         const slideInterval = setInterval(() => {
-            setCurrentImageIndex(prev => (prev + 1) % images.length)
+            setCurrentImageIndex(prev => {
+                let nextIndex = (prev + 1) % images.length
+                // Skip error images (try up to 3 times to find a working image)
+                let attempts = 0
+                while (imageErrors.has(nextIndex) && attempts < images.length) {
+                    nextIndex = (nextIndex + 1) % images.length
+                    attempts++
+                }
+                return nextIndex
+            })
         }, 3000)
         return () => clearInterval(slideInterval)
-    }, [mounted, images.length])
+    }, [mounted, images.length, imageErrors])
 
     // Simulate bidding cycle
     useEffect(() => {
@@ -276,7 +301,7 @@ export function AboutAuctions() {
                                                     animate={{ opacity: 1, scale: 1 }}
                                                     exit={{ opacity: 0 }}
                                                     transition={{ duration: 0.5 }}
-                                                    className="w-full h-full"
+                                                    className="w-full h-full relative"
                                                 >
                                                     <Image
                                                         src={images[currentImageIndex]}
@@ -284,7 +309,26 @@ export function AboutAuctions() {
                                                         fill
                                                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                                                         style={{ objectFit: 'cover' }}
+                                                        onError={() => handleImageError(currentImageIndex)}
+                                                        onLoad={() => handleImageLoad(currentImageIndex)}
+                                                        loading="eager"
+                                                        priority
                                                     />
+                                                    {/* Loading placeholder */}
+                                                    {!imageLoaded.has(currentImageIndex) && !imageErrors.has(currentImageIndex) && (
+                                                        <div className="absolute inset-0 bg-slate-200 dark:bg-slate-700 animate-pulse flex items-center justify-center">
+                                                            <Camera className="w-8 h-8 text-slate-400" />
+                                                        </div>
+                                                    )}
+                                                    {/* Error fallback */}
+                                                    {imageErrors.has(currentImageIndex) && (
+                                                        <div className="absolute inset-0 bg-slate-200 dark:bg-slate-700 flex items-center justify-center">
+                                                            <div className="text-center">
+                                                                <Camera className="w-8 h-8 text-slate-400 mx-auto mb-2" />
+                                                                <p className="text-xs text-slate-500">Nie udało się załadować zdjęcia</p>
+                                                            </div>
+                                                        </div>
+                                                    )}
                                                 </motion.div>
                                             </AnimatePresence>
                                             <div className="absolute bottom-4 left-4 flex gap-1">

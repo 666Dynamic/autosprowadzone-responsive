@@ -9,11 +9,57 @@ import Image from "next/image"
 export function Hero() {
     function VideoBackground() {
         const [videoError, setVideoError] = useState(false)
+        const [isMobile, setIsMobile] = useState(false)
+        const [canAutoplay, setCanAutoplay] = useState(false)
+
+        useEffect(() => {
+            // Check if device is mobile
+            const checkMobile = () => {
+                setIsMobile(window.innerWidth < 768 || /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent))
+            }
+
+            checkMobile()
+            window.addEventListener('resize', checkMobile)
+
+            // Test if autoplay works
+            const testAutoplay = async () => {
+                try {
+                    const video = document.createElement('video')
+                    video.muted = true
+                    video.playsInline = true
+                    const playPromise = video.play()
+                    if (playPromise !== undefined) {
+                        await playPromise
+                        setCanAutoplay(true)
+                    }
+                } catch (error) {
+                    setCanAutoplay(false)
+                }
+            }
+
+            testAutoplay()
+
+            return () => window.removeEventListener('resize', checkMobile)
+        }, [])
+
+        // Show static image on mobile or if autoplay is not supported
+        if (isMobile || !canAutoplay) {
+            return (
+                <Image
+                    src="/hero-bg.png"
+                    alt="Background Image"
+                    fill
+                    priority
+                    className="absolute inset-0 w-full h-full object-cover opacity-30 dark:opacity-20"
+                    style={{ objectFit: 'cover' }}
+                />
+            )
+        }
 
         return (
             <>
                 {videoError && (
-                    <Image 
+                    <Image
                         src="/hero-bg.png"
                         alt="Background Image"
                         fill
@@ -27,8 +73,9 @@ export function Hero() {
                     loop
                     muted
                     playsInline
-                    preload="auto"
+                    preload="metadata"
                     onError={() => setVideoError(true)}
+                    onCanPlay={() => setCanAutoplay(true)}
                     className={`absolute inset-0 w-full h-full object-cover opacity-30 dark:opacity-20 ${videoError ? 'hidden' : 'block'}`}
                 >
                     <source src="/13164895_3840_2160_30fps.mp4" type="video/mp4" />
