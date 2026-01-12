@@ -3,51 +3,21 @@
 import { Button } from "@/components/ui/button"
 import { ArrowRight, CheckCircle2 } from "lucide-react"
 import Link from "next/link"
-import { useState, useEffect } from "react"
-import Image from "next/image"
 
 export function Hero() {
     function VideoBackground() {
-        const [showImage, setShowImage] = useState(false)
-
-        useEffect(() => {
-            // Always try to show video, but have fallback image if video fails
-            const videoTimeout = setTimeout(() => {
-                setShowImage(true)
-            }, 5000) // Fallback after 5 seconds if video doesn't load
-
-            return () => clearTimeout(videoTimeout)
-        }, [])
-
         return (
-            <>
-                {showImage && (
-                    <Image
-                        src="/hero-bg.png"
-                        alt="Background Image"
-                        fill
-                        priority
-                        className="absolute inset-0 w-full h-full object-cover opacity-30 dark:opacity-20"
-                        style={{ objectFit: 'cover' }}
-                    />
-                )}
-                <video
-                    autoPlay
-                    loop
-                    muted
-                    playsInline
-                    preload="metadata"
-                    onError={() => setShowImage(true)}
-                    onLoadedData={() => {
-                        // Video loaded successfully, hide fallback image
-                        setShowImage(false)
-                    }}
-                    className={`absolute inset-0 w-full h-full object-cover opacity-30 dark:opacity-20 ${showImage ? 'hidden' : 'block'}`}
-                >
-                    <source src="/13164895_3840_2160_30fps.mp4" type="video/mp4" />
-                    Your browser does not support the video tag.
-                </video>
-            </>
+            <video
+                autoPlay
+                loop
+                muted
+                playsInline
+                preload="metadata"
+                className="absolute inset-0 w-full h-full object-cover opacity-30 dark:opacity-20"
+            >
+                <source src="/13164895_3840_2160_30fps.mp4" type="video/mp4" />
+                Your browser does not support the video tag.
+            </video>
         )
     }
 
