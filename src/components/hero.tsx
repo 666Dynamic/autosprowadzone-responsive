@@ -35,7 +35,7 @@ export function Hero() {
     }
 
     return (
-        <section className="relative overflow-hidden bg-background pt-24 md:pt-32 pb-24 lg:pt-40 lg:pb-32 min-h-[85vh] flex items-center">
+        <section className="relative overflow-hidden bg-gradient-to-br from-primary/5 via-background to-accent/5 pt-24 md:pt-32 pb-24 lg:pt-40 lg:pb-32 min-h-[85vh] flex items-center">
             <div className="absolute inset-0 z-0">
                 <VideoBackground />
                 <div className="absolute inset-0 bg-gradient-to-b from-background/90 via-background/70 to-background" />
