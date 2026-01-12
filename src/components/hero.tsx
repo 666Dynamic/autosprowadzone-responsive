@@ -9,69 +9,45 @@ import Image from "next/image"
 export function Hero() {
     function VideoBackground() {
         const [showImage, setShowImage] = useState(false)
-        const [isMobile, setIsMobile] = useState(false)
 
         useEffect(() => {
-            // Check if device is mobile - if so, always show image
-            const checkMobile = () => {
-                const mobile = window.innerWidth < 768 ||
-                    /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ||
-                    navigator.platform.includes('Mac') && navigator.maxTouchPoints > 1 // iPad detection
+            // Always try to show video, but have fallback image if video fails
+            const videoTimeout = setTimeout(() => {
+                setShowImage(true)
+            }, 5000) // Fallback after 5 seconds if video doesn't load
 
-                setIsMobile(mobile)
-                if (mobile) {
-                    setShowImage(true)
-                }
-            }
-
-            checkMobile()
-            window.addEventListener('resize', checkMobile)
-
-            // For desktop, try video but fallback to image after timeout or error
-            if (!isMobile) {
-                const videoTimeout = setTimeout(() => {
-                    setShowImage(true)
-                }, 3000) // Fallback after 3 seconds if video doesn't load
-
-                return () => {
-                    window.removeEventListener('resize', checkMobile)
-                    clearTimeout(videoTimeout)
-                }
-            }
-
-            return () => window.removeEventListener('resize', checkMobile)
-        }, [isMobile])
-
-        // Always show image on mobile devices
-        if (isMobile || showImage) {
-            return (
-                <Image
-                    src="/hero-bg.png"
-                    alt="Background Image"
-                    fill
-                    priority
-                    className="absolute inset-0 w-full h-full object-cover opacity-30 dark:opacity-20"
-                    style={{ objectFit: 'cover' }}
-                />
-            )
-        }
+            return () => clearTimeout(videoTimeout)
+        }, [])
 
         return (
-            <video
-                autoPlay
-                loop
-                muted
-                playsInline
-                preload="metadata"
-                onError={() => setShowImage(true)}
-                onLoadedData={() => {
-                    // Video loaded successfully, keep showing it
-                }}
-                className="absolute inset-0 w-full h-full object-cover opacity-30 dark:opacity-20"
-            >
-                <source src="/13164895_3840_2160_30fps.mp4" type="video/mp4" />
-                Your browser does not support the video tag.
-            </video>
+            <>
+                {showImage && (
+                    <Image
+                        src="/hero-bg.png"
+                        alt="Background Image"
+                        fill
+                        priority
+                        className="absolute inset-0 w-full h-full object-cover opacity-30 dark:opacity-20"
+                        style={{ objectFit: 'cover' }}
+                    />
+                )}
+                <video
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    preload="metadata"
+                    onError={() => setShowImage(true)}
+                    onLoadedData={() => {
+                        // Video loaded successfully, hide fallback image
+                        setShowImage(false)
+                    }}
+                    className={`absolute inset-0 w-full h-full object-cover opacity-30 dark:opacity-20 ${showImage ? 'hidden' : 'block'}`}
+                >
+                    <source src="/13164895_3840_2160_30fps.mp4" type="video/mp4" />
+                    Your browser does not support the video tag.
+                </video>
+            </>
         )
     }
 
