@@ -8,42 +8,42 @@ import Image from "next/image"
 
 export function Hero() {
     function VideoBackground() {
-        const [videoError, setVideoError] = useState(false)
+        const [showImage, setShowImage] = useState(false)
         const [isMobile, setIsMobile] = useState(false)
-        const [canAutoplay, setCanAutoplay] = useState(false)
 
         useEffect(() => {
-            // Check if device is mobile
+            // Check if device is mobile - if so, always show image
             const checkMobile = () => {
-                setIsMobile(window.innerWidth < 768 || /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent))
+                const mobile = window.innerWidth < 768 ||
+                    /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ||
+                    navigator.platform.includes('Mac') && navigator.maxTouchPoints > 1 // iPad detection
+
+                setIsMobile(mobile)
+                if (mobile) {
+                    setShowImage(true)
+                }
             }
 
             checkMobile()
             window.addEventListener('resize', checkMobile)
 
-            // Test if autoplay works
-            const testAutoplay = async () => {
-                try {
-                    const video = document.createElement('video')
-                    video.muted = true
-                    video.playsInline = true
-                    const playPromise = video.play()
-                    if (playPromise !== undefined) {
-                        await playPromise
-                        setCanAutoplay(true)
-                    }
-                } catch (error) {
-                    setCanAutoplay(false)
+            // For desktop, try video but fallback to image after timeout or error
+            if (!isMobile) {
+                const videoTimeout = setTimeout(() => {
+                    setShowImage(true)
+                }, 3000) // Fallback after 3 seconds if video doesn't load
+
+                return () => {
+                    window.removeEventListener('resize', checkMobile)
+                    clearTimeout(videoTimeout)
                 }
             }
 
-            testAutoplay()
-
             return () => window.removeEventListener('resize', checkMobile)
-        }, [])
+        }, [isMobile])
 
-        // Show static image on mobile or if autoplay is not supported
-        if (isMobile || !canAutoplay) {
+        // Always show image on mobile devices
+        if (isMobile || showImage) {
             return (
                 <Image
                     src="/hero-bg.png"
@@ -57,31 +57,21 @@ export function Hero() {
         }
 
         return (
-            <>
-                {videoError && (
-                    <Image
-                        src="/hero-bg.png"
-                        alt="Background Image"
-                        fill
-                        priority
-                        className="absolute inset-0 w-full h-full object-cover opacity-30 dark:opacity-20"
-                        style={{ objectFit: 'cover' }}
-                    />
-                )}
-                <video
-                    autoPlay
-                    loop
-                    muted
-                    playsInline
-                    preload="metadata"
-                    onError={() => setVideoError(true)}
-                    onCanPlay={() => setCanAutoplay(true)}
-                    className={`absolute inset-0 w-full h-full object-cover opacity-30 dark:opacity-20 ${videoError ? 'hidden' : 'block'}`}
-                >
-                    <source src="/13164895_3840_2160_30fps.mp4" type="video/mp4" />
-                    Your browser does not support the video tag.
-                </video>
-            </>
+            <video
+                autoPlay
+                loop
+                muted
+                playsInline
+                preload="metadata"
+                onError={() => setShowImage(true)}
+                onLoadedData={() => {
+                    // Video loaded successfully, keep showing it
+                }}
+                className="absolute inset-0 w-full h-full object-cover opacity-30 dark:opacity-20"
+            >
+                <source src="/13164895_3840_2160_30fps.mp4" type="video/mp4" />
+                Your browser does not support the video tag.
+            </video>
         )
     }
 
